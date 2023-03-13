@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
+import 'package:fluttertoast/fluttertoast.dart'
+    if (kIsWeb) 'package:fluttertoast/fluttertoast_web.dart';
 
 void main() {
   Color mainColor = const Color.fromRGBO(0, 0, 0, 1);
@@ -20,6 +25,36 @@ void main() {
   String info1 = 'INFO1';
   String info2 = 'INFO2';
 
+  void _makePhoneCall(String phonenumber) async {
+    String url = 'tel:$phonenumber';
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (error) {
+      Fluttertoast.showToast(
+          msg: 'Error calling!', backgroundColor: red, textColor: Colors.white);
+    }
+  }
+
+  void _sendMail(String email) async {
+    String url = 'mailto:$email';
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (error) {
+      Fluttertoast.showToast(
+          msg: 'Error sending mail!',
+          backgroundColor: red,
+          textColor: Colors.white);
+    }
+  }
+
   runApp(
     MaterialApp(
       home: Scaffold(
@@ -28,11 +63,18 @@ void main() {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: Color.fromARGB(255, 247, 8, 215),
-              backgroundImage: AssetImage('assets/images/portrait.png'),
-            ),
+            GestureDetector(
+                onDoubleTap: () => {
+                      Fluttertoast.showToast(
+                          msg: 'Yes, it is me... $username',
+                          backgroundColor: mainColor,
+                          textColor: Colors.white)
+                    },
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Color.fromARGB(255, 247, 8, 215),
+                  backgroundImage: AssetImage('assets/images/portrait.png'),
+                )),
             Text(username,
                 style: TextStyle(
                     fontFamily: 'Shadows Into Light',
@@ -54,30 +96,38 @@ void main() {
               width: 150,
               child: Divider(color: orangeLight),
             ),
-            Card(
-                color: boxColor,
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                child: ListTile(
-                  leading: Icon(Icons.phone, color: orange),
-                  title: Text(info1,
-                      style: TextStyle(
-                        color: mainColorShade900,
-                        fontFamily: 'Soce Sans Pro',
-                        fontSize: 20,
-                      )),
-                )),
-            Card(
-                color: boxColor,
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                child: ListTile(
-                  leading: Icon(Icons.email, color: orange),
-                  title: Text(info2,
-                      style: TextStyle(
-                        color: mainColorShade900,
-                        fontFamily: 'Source Sans Pro',
-                        fontSize: 20,
-                      )),
-                )),
+            GestureDetector(
+                onTap: () {
+                  _makePhoneCall(info1);
+                },
+                child: Card(
+                    color: boxColor,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    child: ListTile(
+                      leading: Icon(Icons.phone, color: orange),
+                      title: Text(info1,
+                          style: TextStyle(
+                            color: mainColorShade900,
+                            fontFamily: 'Soce Sans Pro',
+                            fontSize: 20,
+                          )),
+                    ))),
+            GestureDetector(
+                onTap: () {
+                  _sendMail(info2);
+                },
+                child: Card(
+                    color: boxColor,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    child: ListTile(
+                      leading: Icon(Icons.email, color: orange),
+                      title: Text(info2,
+                          style: TextStyle(
+                            color: mainColorShade900,
+                            fontFamily: 'Source Sans Pro',
+                            fontSize: 20,
+                          )),
+                    ))),
           ],
         )),
       ),
