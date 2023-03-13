@@ -19,3 +19,7 @@ flutter run
 
 or
 build to mobile or web
+```bash
+# example 
+flutter build web
+```
