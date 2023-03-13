@@ -5,7 +5,16 @@ void main() {
     MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.teal,
-        body: Container(),
+        body: SafeArea(
+            child: Column(
+          children: const [
+            CircleAvatar(
+              radius: 50,
+              backgroundColor: Color.fromARGB(255, 247, 8, 215),
+              backgroundImage: AssetImage('assets/images/portrait.png'),
+            ),
+          ],
+        )),
       ),
     ),
   );
