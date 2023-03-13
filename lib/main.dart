@@ -16,9 +16,9 @@ void main() {
   Color orangeLight = Color.fromRGBO(255, 195, 153, 1);
 
   String username = 'NAME';
-  String userTitle = 'JOBTITLE';
-  String info1 = 'eg.Phone';
-  String info2 = 'e.Email';
+  String userTitle = 'USERTITLE';
+  String info1 = 'INFO1';
+  String info2 = 'INFO2';
 
   runApp(
     MaterialApp(
@@ -26,6 +26,7 @@ void main() {
         backgroundColor: orange,
         body: SafeArea(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 50,
@@ -48,40 +49,35 @@ void main() {
                   letterSpacing: 2.5,
                   fontWeight: FontWeight.bold),
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              color: boxColor,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-              child: Row(children: [
-                Icon(Icons.phone, color: orange),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(info1,
-                    style: TextStyle(
-                      color: mainColorShade900,
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20,
-                    ))
-              ]),
+            SizedBox(
+              height: 20,
+              width: 150,
+              child: Divider(color: orangeLight),
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              color: boxColor,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-              child: Row(children: [
-                Icon(Icons.mail, color: orange),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(info2,
-                    style: TextStyle(
-                      color: mainColorShade900,
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20,
-                    ))
-              ]),
-            )
+            Card(
+                color: boxColor,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: ListTile(
+                  leading: Icon(Icons.phone, color: orange),
+                  title: Text(info1,
+                      style: TextStyle(
+                        color: mainColorShade900,
+                        fontFamily: 'Soce Sans Pro',
+                        fontSize: 20,
+                      )),
+                )),
+            Card(
+                color: boxColor,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: ListTile(
+                  leading: Icon(Icons.email, color: orange),
+                  title: Text(info2,
+                      style: TextStyle(
+                        color: mainColorShade900,
+                        fontFamily: 'Source Sans Pro',
+                        fontSize: 20,
+                      )),
+                )),
           ],
         )),
       ),
