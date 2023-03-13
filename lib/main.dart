@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:fluttertoast/fluttertoast.dart'
     if (kIsWeb) 'package:fluttertoast/fluttertoast_web.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 void main() {
   Color mainColor = const Color.fromRGBO(0, 0, 0, 1);
@@ -24,6 +25,17 @@ void main() {
   String userTitle = 'USERTITLE';
   String info1 = 'INFO1';
   String info2 = 'INFO2';
+
+  String userUrl = "google.com";
+  String personalInfoQR = 'https//$userUrl';
+
+  final qrCode = QrImage(
+    data: personalInfoQR,
+    version: QrVersions.auto,
+    size: 100,
+    gapless: false,
+    backgroundColor: boxColor,
+  );
 
   void _makePhoneCall(String phonenumber) async {
     String url = 'tel:$phonenumber';
@@ -50,6 +62,22 @@ void main() {
     } catch (error) {
       Fluttertoast.showToast(
           msg: 'Error sending mail!',
+          backgroundColor: red,
+          textColor: Colors.white);
+    }
+  }
+
+  void _loadUrl(String url) async {
+    final Uri encodedUri = Uri(scheme: 'https', host: url);
+    try {
+      if (await canLaunchUrl(encodedUri)) {
+        await launchUrl(encodedUri);
+      } else {
+        throw 'Could not launch $encodedUri';
+      }
+    } catch (error) {
+      Fluttertoast.showToast(
+          msg: 'loadUrl: $error',
           backgroundColor: red,
           textColor: Colors.white);
     }
@@ -128,6 +156,10 @@ void main() {
                             fontSize: 20,
                           )),
                     ))),
+            SizedBox(
+              height: 25,
+            ),
+            GestureDetector(onTap: () => {_loadUrl(userUrl)}, child: qrCode),
           ],
         )),
       ),

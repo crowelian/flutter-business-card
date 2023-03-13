@@ -41,6 +41,8 @@ dependencies:
   # show simple notification: toast
   fluttertoast: ^8.2.1
 
+  qr_flutter: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
