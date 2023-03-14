@@ -20,6 +20,9 @@ flutter run
 or
 build to mobile or web
 ```bash
-# example 
+# example for web
 flutter build web
+
+# example for android debug build:
+flutter build apk --debug
 ```
