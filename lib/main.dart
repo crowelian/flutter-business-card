@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
@@ -61,10 +62,12 @@ void main() {
       }
     } catch (error) {
       Fluttertoast.showToast(
-          msg: 'Error opening mail app, maybe you need to configure it?',
+          msg:
+              'Error opening mail app. \nI\'ve copied the email to your clipboard.',
           backgroundColor: red,
           textColor: Colors.white);
     }
+    Clipboard.setData(ClipboardData(text: email));
   }
 
   Future<void> _launchUrl(String url) async {
