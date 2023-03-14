@@ -61,25 +61,20 @@ void main() {
       }
     } catch (error) {
       Fluttertoast.showToast(
-          msg: 'Error sending mail!',
+          msg: 'Error opening mail app, maybe you need to configure it?',
           backgroundColor: red,
           textColor: Colors.white);
     }
   }
 
-  void _loadUrl(String url) async {
-    final Uri encodedUri = Uri(scheme: 'https', host: url);
-    try {
-      if (await canLaunchUrl(encodedUri)) {
-        await launchUrl(encodedUri);
-      } else {
-        throw 'Could not launch $encodedUri';
-      }
-    } catch (error) {
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri(scheme: 'https', host: url);
+    if (!await launchUrl(uri, mode: LaunchMode.inAppWebView)) {
       Fluttertoast.showToast(
-          msg: 'loadUrl: $error',
+          msg: 'Could not launch the url',
           backgroundColor: red,
           textColor: Colors.white);
+      throw "Could not launch the url";
     }
   }
 
@@ -159,7 +154,7 @@ void main() {
             SizedBox(
               height: 25,
             ),
-            GestureDetector(onTap: () => {_loadUrl(userUrl)}, child: qrCode),
+            GestureDetector(onTap: () => {_launchUrl(userUrl)}, child: qrCode),
           ],
         )),
       ),
