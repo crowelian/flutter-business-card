@@ -5,8 +5,9 @@ E-Business card, with shared preferences saving and setting page.
 A simple electronic business card, sort of... Learning the basic functionalities of Flutter.
 
 ## TODOS:
-- get the app data from JSON
+- get the user image from dynamic location
 - add custom color picker
+- swipe to change personal / work business card?
 
 
 ## Installation
