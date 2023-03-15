@@ -7,21 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart'
     if (kIsWeb) 'package:fluttertoast/fluttertoast_web.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'main_colors.dart';
+
 void main() {
-  Color mainColor = const Color.fromRGBO(0, 0, 0, 1);
-  Color mainColorInertedOpacity100 = Color.fromRGBO(
-      255 - mainColor.red, 255 - mainColor.green, 255 - mainColor.blue, 0.4);
-  Color mainColorShade900 = mainColor.withOpacity(0.9);
-  Color boxColor = Colors.white;
-  Color red = Color.fromRGBO(227, 25, 55, 1);
-  Color burgundy = Color.fromRGBO(153, 31, 61, 1);
-  Color purple = Color.fromRGBO(82, 64, 171, 1);
-  Color purpleDark = Color.fromRGBO(32, 10, 88, 1);
-
-  Color lightGray = Color.fromRGBO(225, 225, 225, 1);
-  Color orange = Color.fromRGBO(255, 106, 0, 1);
-  Color orangeLight = Color.fromRGBO(255, 195, 153, 1);
-
   String username = 'NAME';
   String userTitle = 'USERTITLE';
   String info1 = 'INFO1';
@@ -35,7 +23,7 @@ void main() {
     version: QrVersions.auto,
     size: 100,
     gapless: false,
-    backgroundColor: boxColor,
+    backgroundColor: MainColors.boxColor,
   );
 
   void _makePhoneCall(String phonenumber) async {
@@ -48,7 +36,9 @@ void main() {
       }
     } catch (error) {
       Fluttertoast.showToast(
-          msg: 'Error calling!', backgroundColor: red, textColor: Colors.white);
+          msg: 'Error calling!',
+          backgroundColor: MainColors.red,
+          textColor: MainColors.textColor);
     }
   }
 
@@ -64,8 +54,8 @@ void main() {
       Fluttertoast.showToast(
           msg:
               'Error opening mail app. \nI\'ve copied the email to your clipboard.',
-          backgroundColor: red,
-          textColor: Colors.white);
+          backgroundColor: MainColors.red,
+          textColor: MainColors.textColor);
     }
     Clipboard.setData(ClipboardData(text: email));
   }
@@ -75,8 +65,8 @@ void main() {
     if (!await launchUrl(uri, mode: LaunchMode.inAppWebView)) {
       Fluttertoast.showToast(
           msg: 'Could not launch the url',
-          backgroundColor: red,
-          textColor: Colors.white);
+          backgroundColor: MainColors.red,
+          textColor: MainColors.textColor);
       throw "Could not launch the url";
     }
   }
@@ -84,7 +74,7 @@ void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
-        backgroundColor: orange,
+        backgroundColor: MainColors.orange,
         body: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -93,12 +83,12 @@ void main() {
                 onDoubleTap: () => {
                       Fluttertoast.showToast(
                           msg: 'Yes, it is me... $username',
-                          backgroundColor: mainColor,
-                          textColor: Colors.white)
+                          backgroundColor: MainColors.mainColor,
+                          textColor: MainColors.textColor)
                     },
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundColor: Color.fromARGB(255, 247, 8, 215),
+                  backgroundColor: MainColors.debugColor,
                   backgroundImage: AssetImage('assets/images/portrait.png'),
                 )),
             Text(username,
@@ -112,7 +102,7 @@ void main() {
               userTitle,
               style: TextStyle(
                   fontFamily: 'Source Sans Pro',
-                  color: lightGray,
+                  color: MainColors.lightGray,
                   fontSize: 20,
                   letterSpacing: 2.5,
                   fontWeight: FontWeight.bold),
@@ -120,20 +110,20 @@ void main() {
             SizedBox(
               height: 20,
               width: 150,
-              child: Divider(color: orangeLight),
+              child: Divider(color: MainColors.orangeLight),
             ),
             GestureDetector(
                 onTap: () {
                   _makePhoneCall(info1);
                 },
                 child: Card(
-                    color: boxColor,
+                    color: MainColors.boxColor,
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                     child: ListTile(
-                      leading: Icon(Icons.phone, color: orange),
+                      leading: Icon(Icons.phone, color: MainColors.orange),
                       title: Text(info1,
                           style: TextStyle(
-                            color: mainColorShade900,
+                            color: MainColors.mainColorShade900,
                             fontFamily: 'Soce Sans Pro',
                             fontSize: 20,
                           )),
@@ -143,13 +133,13 @@ void main() {
                   _sendMail(info2);
                 },
                 child: Card(
-                    color: boxColor,
+                    color: MainColors.boxColor,
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                     child: ListTile(
-                      leading: Icon(Icons.email, color: orange),
+                      leading: Icon(Icons.email, color: MainColors.orange),
                       title: Text(info2,
                           style: TextStyle(
-                            color: mainColorShade900,
+                            color: MainColors.mainColorShade900,
                             fontFamily: 'Source Sans Pro',
                             fontSize: 20,
                           )),
