@@ -4,6 +4,12 @@ Trying out flutter
 ## Description
 A simple electronic business card, sort of...
 
+## TODOS:
+- add settings page to change background color
+- save the settings to "shared preferences"
+- get the app data from JSON
+
+
 ## Installation
 
 get dependecies:
