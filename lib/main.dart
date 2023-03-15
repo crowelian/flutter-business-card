@@ -101,111 +101,117 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colorProvider.backgroundColor,
       body: Consumer<ColorProvider>(
-          builder: (context, colorProvider, child) => SafeArea(
-                  child: (Column(children: [
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                        onDoubleTap: () => {
-                              Fluttertoast.showToast(
-                                  msg: 'Yes, it is me... $username',
-                                  backgroundColor: MainColors.mainColor,
-                                  textColor: MainColors.textColor)
-                            },
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundColor: MainColors.debugColor,
-                          backgroundImage:
-                              AssetImage('assets/images/portrait.png'),
-                        )),
-                    Text(username,
-                        style: TextStyle(
-                            fontFamily: 'Shadows Into Light',
-                            fontSize: 35,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 3)),
-                    Text(
-                      userTitle,
-                      style: TextStyle(
-                          fontFamily: 'Source Sans Pro',
-                          color: MainColors.lightGray,
-                          fontSize: 20,
-                          letterSpacing: 2.5,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 20,
-                      width: 150,
-                      child: Divider(color: MainColors.orangeLight),
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          _makePhoneCall(info1);
-                        },
-                        child: Card(
-                            color: MainColors.boxColor,
-                            margin: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 25),
-                            child: ListTile(
-                              leading:
-                                  Icon(Icons.phone, color: MainColors.orange),
-                              title: Text(info1,
-                                  style: TextStyle(
-                                    color: MainColors.mainColorShade900,
-                                    fontFamily: 'Soce Sans Pro',
-                                    fontSize: 20,
-                                  )),
-                            ))),
-                    GestureDetector(
-                        onTap: () {
-                          _sendMail(info2);
-                        },
-                        child: Card(
-                            color: MainColors.boxColor,
-                            margin: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 25),
-                            child: ListTile(
-                              leading:
-                                  Icon(Icons.email, color: MainColors.orange),
-                              title: Text(info2,
-                                  style: TextStyle(
-                                    color: MainColors.mainColorShade900,
-                                    fontFamily: 'Source Sans Pro',
-                                    fontSize: 20,
-                                  )),
-                            ))),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    GestureDetector(
-                        onTap: () => {_launchUrl(userUrl)}, child: qrCode),
-                    SizedBox(
-                      height: 25,
-                    ),
-                  ],
-                )),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  padding: EdgeInsets.all(15),
-                  child: FloatingActionButton(
-                    onPressed: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SettingsPage()))
-                    },
-                    child: Icon(Icons.settings, color: MainColors.textColor),
-                    backgroundColor: colorProvider.backgroundColor,
-                    // style: ElevatedButton.styleFrom(
-                    //     primary: MainColors.lightGray, // background
-                    //     onPrimary: MainColors.burgundy // text
-                    //     )
+        builder: (context, colorProvider, child) => SafeArea(
+          child: (Column(children: [
+            Expanded(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onDoubleTap: () => {
+                    Fluttertoast.showToast(
+                        msg: 'Yes, it is me... $username',
+                        backgroundColor: MainColors.mainColor,
+                        textColor: MainColors.textColor)
+                  },
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: MainColors.debugColor,
+                    backgroundImage: AssetImage('assets/images/portrait.png'),
                   ),
-                )
-              ])))),
+                ),
+                Text(
+                  username,
+                  style: TextStyle(
+                      fontFamily: 'Shadows Into Light',
+                      fontSize: 35,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 3),
+                ),
+                Text(
+                  userTitle,
+                  style: TextStyle(
+                      fontFamily: 'Source Sans Pro',
+                      color: MainColors.lightGray,
+                      fontSize: 20,
+                      letterSpacing: 2.5,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 20,
+                  width: 150,
+                  child: Divider(color: MainColors.orangeLight),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _makePhoneCall(info1);
+                  },
+                  child: Card(
+                    color: MainColors.boxColor,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    child: ListTile(
+                      leading: Icon(Icons.phone, color: MainColors.orange),
+                      title: Text(
+                        info1,
+                        style: TextStyle(
+                          color: MainColors.mainColorShade900,
+                          fontFamily: 'Soce Sans Pro',
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _sendMail(info2);
+                  },
+                  child: Card(
+                    color: MainColors.boxColor,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    child: ListTile(
+                      leading: Icon(Icons.email, color: MainColors.orange),
+                      title: Text(
+                        info2,
+                        style: TextStyle(
+                          color: MainColors.mainColorShade900,
+                          fontFamily: 'Source Sans Pro',
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                GestureDetector(
+                    onTap: () => {_launchUrl(userUrl)}, child: qrCode),
+                SizedBox(
+                  height: 25,
+                ),
+              ],
+            )),
+            Container(
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.all(15),
+              child: FloatingActionButton(
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()))
+                },
+                child: Icon(Icons.settings, color: MainColors.textColor),
+                backgroundColor: colorProvider.backgroundColor,
+                // style: ElevatedButton.styleFrom(
+                //     primary: MainColors.lightGray, // background
+                //     onPrimary: MainColors.burgundy // text
+                //     )
+              ),
+            )
+          ])),
+        ),
+      ),
     );
   }
 }
