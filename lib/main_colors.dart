@@ -18,4 +18,6 @@ class MainColors {
   static Color textColor = Color.fromRGBO(255, 255, 255, 1);
 
   static Color debugColor = Color.fromARGB(255, 247, 8, 215);
+
+  static Color teal = Colors.teal;
 }
