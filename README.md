@@ -6,6 +6,7 @@ A simple electronic business card, sort of... Learning the basic functionalities
 
 ## TODOS:
 - get the app data from JSON
+- add custom color picker
 
 
 ## Installation

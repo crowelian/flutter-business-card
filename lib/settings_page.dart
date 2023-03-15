@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_business_card/preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'color_provider.dart';
+import 'main_colors.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -27,8 +29,14 @@ class SettingsPage extends StatelessWidget {
           Container(
               margin: EdgeInsets.all(15),
               child: ElevatedButton(
-                  onPressed: () =>
-                      {saveBackgroundColor(colorProvider.backgroundColor)},
+                  onPressed: () => {
+                        saveBackgroundColor(colorProvider.backgroundColor),
+                        Fluttertoast.showToast(
+                            msg: 'Background Color saved to preferences!',
+                            backgroundColor: colorProvider.backgroundColor,
+                            textColor: MainColors.textColor),
+                        Navigator.pop(context)
+                      },
                   child: Text("save settings"),
                   style: ElevatedButton.styleFrom(
                       primary: colorProvider.backgroundColor)))
