@@ -1,8 +1,8 @@
 # flutter-business-card
-Trying out flutter
+E-Business card, with shared preferences saving and setting page.
 
 ## Description
-A simple electronic business card, sort of...
+A simple electronic business card, sort of... Learning the basic functionalities of Flutter.
 
 ## TODOS:
 - get the app data from JSON
