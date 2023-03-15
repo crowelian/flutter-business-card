@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MainColors {
   static Color mainColor = const Color.fromRGBO(0, 0, 0, 1);
+  static Color defaultBackgroundColor = Colors.teal;
   static Color mainColorInertedOpacity100 = Color.fromRGBO(
       255 - mainColor.red, 255 - mainColor.green, 255 - mainColor.blue, 0.4);
   static Color mainColorShade900 = mainColor.withOpacity(0.9);

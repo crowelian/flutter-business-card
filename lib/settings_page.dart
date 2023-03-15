@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_business_card/preferences.dart';
 import 'package:provider/provider.dart';
 import 'color_provider.dart';
 
@@ -13,13 +14,24 @@ class SettingsPage extends StatelessWidget {
           backgroundColor: colorProvider.backgroundColor,
         ),
         backgroundColor: colorProvider.backgroundColor,
-        body: GridView.count(crossAxisCount: 3, children: [
-          ColorTile(Color.fromRGBO(255, 106, 0, 1)),
-          ColorTile(Color.fromRGBO(0, 0, 0, 1)),
-          ColorTile(Colors.teal),
-          ColorTile(Color.fromRGBO(153, 31, 61, 1)),
-          ColorTile(Color.fromRGBO(82, 64, 171, 1)),
-          ColorTile(Color.fromARGB(255, 112, 188, 232)),
+        body: Column(children: [
+          Expanded(
+              child: GridView.count(crossAxisCount: 3, children: [
+            ColorTile(Color.fromRGBO(255, 106, 0, 1)),
+            ColorTile(Color.fromRGBO(0, 0, 0, 1)),
+            ColorTile(Colors.teal),
+            ColorTile(Color.fromRGBO(153, 31, 61, 1)),
+            ColorTile(Color.fromRGBO(82, 64, 171, 1)),
+            ColorTile(Color.fromARGB(255, 112, 188, 232)),
+          ])),
+          Container(
+              margin: EdgeInsets.all(15),
+              child: ElevatedButton(
+                  onPressed: () =>
+                      {saveBackgroundColor(colorProvider.backgroundColor)},
+                  child: Text("save settings"),
+                  style: ElevatedButton.styleFrom(
+                      primary: colorProvider.backgroundColor)))
         ]));
   }
 }

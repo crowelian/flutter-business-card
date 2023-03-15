@@ -5,7 +5,6 @@ Trying out flutter
 A simple electronic business card, sort of...
 
 ## TODOS:
-- save the settings to "shared preferences"
 - get the app data from JSON
 
 
