@@ -37,3 +37,6 @@ flutter build web
 # example for android debug build:
 flutter build apk --debug
 ```
+
+## NOTES
+- tested the jwt auth with my simple json data api: https://github.com/crowelian/json-data-api
