@@ -19,6 +19,10 @@ flutter pub get
 
 
 ## Usage
+- Change the assets/images/portrait.png to your own
+- Change the assets/json/user_data.json to your own
+
+
 ```bash
 flutter run
 ```
