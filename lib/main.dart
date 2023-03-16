@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart'
     if (kIsWeb) 'package:fluttertoast/fluttertoast_web.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'config.dart';
 import 'main_colors.dart';
 import 'package:provider/provider.dart';
 import 'color_provider.dart';
@@ -95,7 +96,16 @@ class MainPage extends StatelessWidget {
     }
 
     Future<User> _loadUserData() async {
-      return await JsonDataProvider().fetchUserDataFromAssets();
+      try {
+        if (Config.useJwtAuthorization) {
+          return await JsonDataProvider().fetchUserDataWithJwt(Config.userId);
+        } else {
+          return await JsonDataProvider().fetchUserDataFromUrl();
+        }
+      } catch (error) {
+        print(error);
+        return await JsonDataProvider().fetchUserDataFromAssets();
+      }
     }
 
     return Scaffold(

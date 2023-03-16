@@ -8,6 +8,7 @@ A simple electronic business card, sort of... Learning the basic functionalities
 - get the user image from dynamic location
 - add custom color picker
 - swipe to change personal / work business card?
+- GET app config from config.json
 
 
 ## Installation
