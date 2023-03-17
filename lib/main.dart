@@ -6,7 +6,6 @@ import 'package:flutter_business_card/json_data_provider.dart';
 import 'package:flutter_business_card/settings_page.dart';
 import 'package:flutter_business_card/user.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:io';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:fluttertoast/fluttertoast.dart'
     if (kIsWeb) 'package:fluttertoast/fluttertoast_web.dart';
@@ -16,8 +15,6 @@ import 'config.dart';
 import 'main_colors.dart';
 import 'package:provider/provider.dart';
 import 'color_provider.dart';
-
-import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
