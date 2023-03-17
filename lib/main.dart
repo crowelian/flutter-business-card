@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_business_card/json_data_provider.dart';
@@ -39,11 +41,39 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool _imageLoadError = false;
-
   @override
   Widget build(BuildContext context) {
     ColorProvider colorProvider = Provider.of<ColorProvider>(context);
+
+    ImageProvider _imageProvider = AssetImage(Config.portraitFallback);
+    User userData;
+
+    // Custom image loader to handle async image loading
+    Future<ImageProvider> _loadImage(String imageUrl) async {
+      final completer = Completer<ImageProvider>();
+      final imageProvider = NetworkImage(imageUrl);
+
+      imageProvider
+          .resolve(const ImageConfiguration())
+          .addListener(ImageStreamListener(
+            (ImageInfo imageInfo, bool synchronousCall) {
+              if (!completer.isCompleted) {
+                completer.complete(imageProvider);
+              }
+            },
+            onError: (exception, stackTrace) {
+              if (!completer.isCompleted) {
+                completer.completeError(exception, stackTrace);
+              }
+            },
+          ));
+
+      try {
+        return await completer.future;
+      } catch (error) {
+        return AssetImage(Config.portraitFallback);
+      }
+    }
 
     void _makePhoneCall(String phonenumber) async {
       String url = 'tel:$phonenumber';
@@ -108,7 +138,6 @@ class _MainPageState extends State<MainPage> {
           return await JsonDataProvider().fetchUserDataFromUrl();
         }
       } catch (error) {
-        print(error);
         return await JsonDataProvider().fetchUserDataFromAssets();
       }
     }
@@ -118,7 +147,12 @@ class _MainPageState extends State<MainPage> {
       body: Consumer<ColorProvider>(
         builder: (context, colorProvider, child) => SafeArea(
           child: FutureBuilder<User>(
-            future: _loadUserData(),
+            future: _loadUserData().then((User loadedUserData) async {
+              userData = loadedUserData;
+              _imageProvider = await _loadImage(userData.userImageUrl);
+
+              return loadedUserData;
+            }),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -126,22 +160,6 @@ class _MainPageState extends State<MainPage> {
                 return Center(child: Text("Error loading user data!"));
               } else {
                 final userData = snapshot.data!;
-
-                dynamic checkNetworkImage() {
-                  print("Debug. load image");
-                  if (userData.userImageUrl.isNotEmpty) {
-                    try {
-                      print("Debug. load NETWORK image");
-                      return NetworkImage(userData.userImageUrl);
-                    } catch (error) {
-                      setState() {
-                        _imageLoadError = true;
-                      }
-                    }
-                  }
-                  print("Debug. load ASSET image");
-                  return AssetImage(Config.portraitFallback);
-                }
 
                 return (Column(children: [
                   Expanded(
@@ -155,32 +173,11 @@ class _MainPageState extends State<MainPage> {
                               backgroundColor: MainColors.mainColor,
                               textColor: MainColors.textColor)
                         },
-                        child: _imageLoadError
-                            ? SizedBox(
-                                height: 40,
-                              )
-                            : CircleAvatar(
-                                radius: 50,
-                                backgroundColor: MainColors.debugColor,
-                                //backgroundImage: checkNetworkImage(),
-                                child: ClipOval(
-                                  child: FadeInImage(
-                                    image: NetworkImage(userData.userImageUrl),
-                                    placeholder:
-                                        AssetImage(Config.portraitFallback),
-                                    imageErrorBuilder:
-                                        (context, error, stackTrace) {
-                                      setState(() {
-                                        _imageLoadError = true;
-                                      });
-                                      return SizedBox.shrink();
-                                    },
-                                    fit: BoxFit.cover,
-                                    width: 100,
-                                    height: 100,
-                                  ),
-                                ),
-                              ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: MainColors.debugColor,
+                          backgroundImage: _imageProvider,
+                        ),
                       ),
                       Text(
                         userData.username,
