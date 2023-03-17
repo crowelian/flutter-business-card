@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -16,10 +17,12 @@ class JsonDataProvider {
       headers: {
         "Authorization": "Bearer $token",
       },
-    );
+    ).timeout(Duration(seconds: Config.httpTimeout), onTimeout: () {
+      throw TimeoutException("Request to fetch user data with Jwt timed out!");
+    });
+    ;
 
     if (response.statusCode == 200) {
-      print("GOT JWT USER DATA: " + response.body);
       return User.fromJson(json.decode(response.body));
     } else {
       throw Exception("Could not fetch user data with JWT");
@@ -27,11 +30,14 @@ class JsonDataProvider {
   }
 
   Future<User> fetchUserDataFromUrl() async {
-    print("DEBUG: fetching user data........");
-    final response = await http.get(Uri.parse(Config.userDataApiUrl));
+    final response = await http
+        .get(Uri.parse(Config.userDataApiUrl))
+        .timeout(Duration(seconds: Config.httpTimeout), onTimeout: () {
+      throw TimeoutException("Request to fetch user data from url timed out!");
+    });
+    ;
 
     if (response.statusCode == 200) {
-      print("GOT USER DATA: " + response.body);
       return User.fromJson(json.decode(response.body));
     } else {
       throw Exception("Could not fetch user data");
