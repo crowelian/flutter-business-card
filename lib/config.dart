@@ -4,6 +4,8 @@ class Config {
   static const String userDataApiUrl = '$baseUrl/user';
   static const String userId = 'fake-id';
 
+  static const String portraitFallback = 'assets/images/portrait-default.png';
+
   static const int httpTimeout = 5;
   static const bool useJwtAuthorization = true;
 }

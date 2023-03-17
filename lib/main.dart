@@ -33,8 +33,13 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  bool _imageLoadError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +127,22 @@ class MainPage extends StatelessWidget {
               } else {
                 final userData = snapshot.data!;
 
+                dynamic checkNetworkImage() {
+                  print("Debug. load image");
+                  if (userData.userImageUrl.isNotEmpty) {
+                    try {
+                      print("Debug. load NETWORK image");
+                      return NetworkImage(userData.userImageUrl);
+                    } catch (error) {
+                      setState() {
+                        _imageLoadError = true;
+                      }
+                    }
+                  }
+                  print("Debug. load ASSET image");
+                  return AssetImage(Config.portraitFallback);
+                }
+
                 return (Column(children: [
                   Expanded(
                       child: Column(
@@ -134,12 +155,32 @@ class MainPage extends StatelessWidget {
                               backgroundColor: MainColors.mainColor,
                               textColor: MainColors.textColor)
                         },
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundColor: MainColors.debugColor,
-                          backgroundImage:
-                              AssetImage('assets/images/portrait.png'),
-                        ),
+                        child: _imageLoadError
+                            ? SizedBox(
+                                height: 40,
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundColor: MainColors.debugColor,
+                                //backgroundImage: checkNetworkImage(),
+                                child: ClipOval(
+                                  child: FadeInImage(
+                                    image: NetworkImage(userData.userImageUrl),
+                                    placeholder:
+                                        AssetImage(Config.portraitFallback),
+                                    imageErrorBuilder:
+                                        (context, error, stackTrace) {
+                                      setState(() {
+                                        _imageLoadError = true;
+                                      });
+                                      return SizedBox.shrink();
+                                    },
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 100,
+                                  ),
+                                ),
+                              ),
                       ),
                       Text(
                         userData.username,

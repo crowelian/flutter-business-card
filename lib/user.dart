@@ -6,6 +6,7 @@ class User {
 
   final String userUrl;
   final String personalInfoQrLink;
+  final String userImageUrl;
 
   User(
       {required this.username,
@@ -13,16 +14,17 @@ class User {
       required this.info1,
       required this.info2,
       required this.userUrl,
-      required this.personalInfoQrLink});
+      required this.personalInfoQrLink,
+      this.userImageUrl = ""});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      username: json['username'],
-      userTitle: json['userTitle'],
-      info1: json['info1'],
-      info2: json['info2'],
-      userUrl: json['userUrl'],
-      personalInfoQrLink: json['personalInfoQrLink'],
-    );
+        username: json['username'],
+        userTitle: json['userTitle'],
+        info1: json['info1'],
+        info2: json['info2'],
+        userUrl: json['userUrl'],
+        personalInfoQrLink: json['personalInfoQrLink'],
+        userImageUrl: json['userImageUrl']);
   }
 }

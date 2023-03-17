@@ -4,5 +4,6 @@
     "info1": "+358 123 123",
     "info2": "dummy@mail.com",
     "userUrl": "flutter.dev",
-    "personalInfoQrLink": "https://flutter.dev"
+    "personalInfoQrLink": "https://flutter.dev",
+    "userImageUrl": ""
 }
