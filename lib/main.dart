@@ -18,10 +18,16 @@ import 'package:provider/provider.dart';
 import 'color_provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => ColorProvider(),
-    child: MainApp(),
-  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => {
+            runApp(
+              ChangeNotifierProvider(
+                create: (context) => ColorProvider(),
+                child: MainApp(),
+              ),
+            )
+          });
 }
 
 class MainApp extends StatelessWidget {
