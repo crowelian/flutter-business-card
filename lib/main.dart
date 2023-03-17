@@ -17,6 +17,8 @@ import 'main_colors.dart';
 import 'package:provider/provider.dart';
 import 'color_provider.dart';
 
+import 'package:http/http.dart' as http;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -256,8 +258,15 @@ class _MainPageState extends State<MainPage> {
                         height: 25,
                       ),
                       GestureDetector(
-                          onTap: () => {_launchUrl(userData.userUrl)},
-                          child: _generateQrCode(userData.personalInfoQrLink)),
+                        onTap: () async {
+                          userData.userUrl.isNotEmpty
+                              ? _launchUrl(userData.userUrl)
+                              : null;
+                        },
+                        child: userData.personalInfoQrLink.isNotEmpty
+                            ? _generateQrCode(userData.personalInfoQrLink)
+                            : SizedBox.shrink(),
+                      ),
                       SizedBox(
                         height: 25,
                       ),
